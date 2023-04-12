@@ -1,8 +1,8 @@
-FROM	debian:buster
+FROM	debian
 
 RUN		apt-get -y update && apt-get -y install nginx
 
-COPY default /etc/nginx/sites-available/default
+COPY nginx.conf /etc/nginx/sites-available/default
 
 EXPOSE	80/TCP
 
