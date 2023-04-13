@@ -1,5 +1,4 @@
-
-# Github repositories :
+# Useful Github repositories :
 - https://github.com/vbachele/Inception/
 - https://github.com/llescure/42_Inception
 
@@ -12,3 +11,6 @@
 
 # PHPFPM docker tutorial
 - https://www.youtube.com/watch?v=I_9-xWmkh28
+
+# Docker compose
+- https://openclassrooms.com/fr/courses/2035766-optimisez-votre-deploiement-en-creant-des-conteneurs-avec-docker/6211624-decouvrez-et-installez-docker-compose
