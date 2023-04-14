@@ -14,3 +14,6 @@
 
 # Docker compose
 - https://openclassrooms.com/fr/courses/2035766-optimisez-votre-deploiement-en-creant-des-conteneurs-avec-docker/6211624-decouvrez-et-installez-docker-compose
+
+# Install wordpress
+- https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-docker-compose
