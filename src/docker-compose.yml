@@ -8,4 +8,6 @@ services:
                     - "443:443"
     restart:        always
     volumes:
-                    - /var/www/html
+                    - wp_file:/var/www/html
+    networks:
+                    - inception
