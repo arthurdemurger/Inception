@@ -1,16 +1,23 @@
 FROM debian:buster
 
-# Installation
-RUN	apt-get update
-RUN	apt-get install -y  mariadb-server \
-						mariadb_client
+# Update the package repository and upgrade the system
+RUN apt-get update -y
+RUN apt-get upgrade -y
 
+# Install MariaDB server
+RUN apt-get install mariadb-server -y
+
+# Expose port 3306 for MySQL connections
 EXPOSE 3306
 
-RUN	mkdir -p /var/run/mysqld
+# Create a directory for the MySQL socket file
+RUN mkdir -p /var/run/mysqld
 
-COPY	./tools.sql
-COPY	./tools/install_mdb.sh /tmp/
-COPY 	./conf/my_mariadb.cnf /etc/mysql
+# Copy the custom MySQL configuration file
+COPY conf/my.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
-ENTRYPOINT	["sh", "/tmp/install_mdb.sh"]
+# Copy the configuration script
+COPY tools/config_mdb.sh /tmp/
+
+# Set the entrypoint command for the container
+ENTRYPOINT ["bash", "/tmp/install_mdb.sh"]

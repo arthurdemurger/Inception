@@ -1,57 +1,64 @@
 version: '3'
-
 services:
   nginx:
-      container_name: nginx
-      build:  ./requirements/nginx
-      ports:
-        - "443:443"
-      restart:  always
-      volumes:
-        - wordpress_files:/var/www/html
-      networks:
-        - inception
+    container_name: nginx
+    build:
+      context: ./requirements/nginx  # Specify the build context for the Nginx service
+      dockerfile: Dockerfile  # Specify the Dockerfile to use for building the Nginx service
+    env_file: .env  # Load environment variables from the .env file
+    ports:
+      - "443:443"  # Map host port 443 to container port 443 for HTTPS
+    restart: on-failure  # Restart the Nginx service if it fails
+    volumes:
+      - wordpress:/var/www/wordpress  # Mount the 'wordpress' volume to the WordPress directory in the Nginx container
+    networks:
+      - inception  # Connect the Nginx service to the 'inception' network
+    depends_on:
+      - wordpress  # Specify that the Nginx service depends on the WordPress service
 
   mariadb:
-      container_name: mariadb
-      build:  ./requirements/mariadb
-      ports:
-        - "3306:3306"
-      env_file:
-        - ./env
-      networks:
-        - inception
-      restart:  always
-      volumes:
-        - mariadb_files:/var/www/html
+    container_name: mariadb
+    build:
+      context: requirements/mariadb  # Specify the build context for the MariaDB service
+      dockerfile: Dockerfile  # Specify the Dockerfile to use for building the MariaDB service
+    ports:
+      - "3306:3306"  # Map host port 3306 to container port 3306 for MySQL/MariaDB
+    env_file: .env  # Load environment variables from the .env file
+    networks:
+      - inception  # Connect the MariaDB service to the 'inception' network
+    restart: unless-stopped  # Restart the MariaDB service unless explicitly stopped
+    volumes:
+      - mariadb:/var/lib/mysql  # Mount the 'mariadb' volume to the MariaDB data directory
 
   wordpress:
-      container_name: wordpress
-      build:          ./requirements/wordpress
-      env_file:
-        - ./env
-      restart:  always
-      volumes:
-        - wordpress_files:/var/www/html
-      depends_on:
-        - nginx
-        - mariadb
-      networks:
-        - inception
+    container_name: wordpress
+    build:
+      context: requirements/wordpress  # Specify the build context for the WordPress service
+    env_file: .env  # Load environment variables from the .env file
+    restart: on-failure  # Restart the WordPress service if it fails
+    volumes:
+      - wordpress:/var/www/wordpress  # Mount the 'wordpress' volume to the WordPress directory
+    depends_on:
+      - mariadb  # Specify that the WordPress service depends on the MariaDB service
+    networks:
+      - inception  # Connect the WordPress service to the 'inception' network
+    expose:
+      - "9000"  # Expose port 9000 for PHP-FPM
 
 volumes:
-  wordpress_files:
+  wordpress:
     driver: local
     driver_opts:
-      type: none
-      o:  bind
-      device: /home/ademurge/data/wordpress
-  mariadb_files:
+      type: 'none'
+      o: 'bind'
+      device: '/Users/ademurge/data/wordpress'  # Specify the host directory to mount as the 'wordpress' volume
+  mariadb:
     driver: local
     driver_opts:
-      type: none
-      o:  bind
-      device: /home/ademurge/data/mariadb
+      type: 'none'
+      o: 'bind'
+      device: '/Users/ademurge/data/mariadb'  # Specify the host directory to mount as the 'mariadb' volume
 
 networks:
-    inception:
+  inception:
+    driver: bridge  # Create a bridge network called 'inception'
