@@ -14,7 +14,7 @@ RUN apt-get install nginx -y
 # Create directory for SSL certificates
 RUN mkdir -p /etc/nginx/ssl
 # Install OpenSSL package for certificate generation
-RUN apt-get install OpenSSL -y
+RUN apt-get install openssl -y
 # Generate a self-signed SSL certificate
 RUN openssl req -x509 -nodes \
 	-out /etc/nginx/ssl/inception.crt \
@@ -31,10 +31,11 @@ COPY conf/nginx.conf /etc/nginx/nginx.conf
 # Expose port 443 for HTTPS connections
 EXPOSE 443
 
+RUN mkdir -p /var/www/wordpress
 # Set permissions for the web root directory
-RUN chmod 755 /var/www/html
+RUN chmod 755 /var/www/wordpress
 # Change ownership of the web root directory to the www-data user
-RUN chown -R www-data:www-data /var/www/html
+RUN chown -R www-data:www-data /var/www/wordpress
 
 # Start Nginx in the foreground when the container is run
 CMD ["nginx", "-g", "daemon off;"]

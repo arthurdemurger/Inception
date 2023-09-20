@@ -14,10 +14,10 @@ EXPOSE 3306
 RUN mkdir -p /var/run/mysqld
 
 # Copy the custom MySQL configuration file
-COPY conf/my.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
+COPY ./conf/my.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
 
 # Copy the configuration script
-COPY tools/config_mdb.sh /tmp/
+COPY ./tools/config_mdb.sh config_mdb.sh
 
 # Set the entrypoint command for the container
-ENTRYPOINT ["bash", "/tmp/install_mdb.sh"]
+ENTRYPOINT ["bash", "config_mdb.sh"]
