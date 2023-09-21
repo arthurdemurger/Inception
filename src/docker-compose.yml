@@ -51,13 +51,13 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/Users/ademurge/data/wordpress'  # Specify the host directory to mount as the 'wordpress' volume
+      device: '/home/ademurge/data/wordpress/'  # Specify the host directory to mount as the 'wordpress' volume
   mariadb:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/Users/ademurge/data/mariadb'  # Specify the host directory to mount as the 'mariadb' volume
+      device: '/home/ademurge/data/mariadb/'  # Specify the host directory to mount as the 'mariadb' volume
 
 networks:
   inception:

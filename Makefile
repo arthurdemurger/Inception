@@ -6,14 +6,14 @@
 #    By: ademurge <ademurge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/06 10:40:49 by ademurge          #+#    #+#              #
-#    Updated: 2023/07/04 11:25:03 by ademurge         ###   ########.fr        #
+#    Updated: 2023/09/21 14:51:32 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 all:
 	mkdir -p /home/ademurge/data/wordpress/
 	mkdir -p /home/ademurge/data/mariadb/
-	docker compose -f ./src/docker-compose.yml -d --build
+	docker compose -f ./src/docker-compose.yml up -d --build
 
 down:
 	docker compose -f ./src/docker-compose.yml down
