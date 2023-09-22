@@ -1,31 +1,25 @@
+# Using Debian Buster as base image
 FROM debian:buster
 
-# Installation
+# Update and install necessary utilities
 RUN apt-get -y update && apt-get -y upgrade
-RUN apt-get install -y wget
-RUN apt-get install -y php7.3 php-fpm php-mysql mariadb-client
+RUN apt-get install -y curl php7.3 php-fpm php-mysql mariadb-client
 
-# Download WordPress
-RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
-RUN cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
+# Set up directories and PHP environment
+RUN mkdir -p /run/php/
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+	chmod +x wp-cli.phar && \
+	mv wp-cli.phar /usr/local/bin/wp
 
+# Set container working directory
+WORKDIR /var/www/html/
 
-# Set ownership of WordPress files
-RUN chown -R root:root /var/www/wordpress
+# Copy and set permissions for WordPress installer script
+COPY ./tools/wp_installer.sh wp_installer.sh
+RUN chmod +x wp_installer.sh
 
-# Expose port 9000 for PHP-FPM connections
+# Set the entry point for the container
+ENTRYPOINT ["sh", "wp_installer.sh"]
+
+# Expose PHP-FPM port
 EXPOSE 9000
-
-# Download WP-CLI
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN chmod +x wp-cli.phar
-RUN mv wp-cli.phar /usr/local/bin/wp
-
-# Create directory for PHP runtime files
-RUN mkdir -p /run/php
-
-# Copy auto_config.sh script
-COPY ./conf/auto_config.sh auto_config.sh
-
-# Set auto_config.sh as the entrypoint script
-ENTRYPOINT ["sh", "auto_config.sh"]

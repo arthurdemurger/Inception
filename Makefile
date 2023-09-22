@@ -6,7 +6,7 @@
 #    By: ademurge <ademurge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/06 10:40:49 by ademurge          #+#    #+#              #
-#    Updated: 2023/09/21 14:51:32 by ademurge         ###   ########.fr        #
+#    Updated: 2023/09/22 15:01:38 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,6 @@ all:
 down:
 	docker compose -f ./src/docker-compose.yml down
 
-re:
-	@docker compose -f ./src/docker-compose.yml up -d --build
-
 clean:
 	docker stop $$(docker ps -qa);\
 	docker rm $$(docker ps -qa);\
@@ -31,5 +28,7 @@ clean:
 
 deep: clean
 	sudo rm -rf ~/data
+
+re: clean all
 
 .PHONY: all re down clean deep

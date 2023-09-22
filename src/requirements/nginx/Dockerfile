@@ -8,13 +8,12 @@ RUN apt-get update -y
 RUN apt-get upgrade -y
 # Install Nginx web server
 RUN apt-get install nginx -y
-
-
-# SSL
-# Create directory for SSL certificates
-RUN mkdir -p /etc/nginx/ssl
 # Install OpenSSL package for certificate generation
 RUN apt-get install openssl -y
+
+# Create directory for SSL certificates
+RUN mkdir -p /etc/nginx/ssl
+
 # Generate a self-signed SSL certificate
 RUN openssl req -x509 -nodes \
 	-out /etc/nginx/ssl/inception.crt \
@@ -25,6 +24,7 @@ RUN openssl req -x509 -nodes \
 # Nginx configuration
 # Create directory for Nginx runtime files
 RUN mkdir -p /var/run/nginx
+
 # Copy custom Nginx configuration file
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 

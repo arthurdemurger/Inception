@@ -12,4 +12,4 @@ bind_address = *
 port = 3306
 
 # User under which the MySQL server runs
-user = mysql
+user = root
