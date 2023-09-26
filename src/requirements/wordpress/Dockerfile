@@ -12,14 +12,14 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 	mv wp-cli.phar /usr/local/bin/wp
 
 # Set container working directory
-WORKDIR /var/www/html/
+WORKDIR /var/www/wordpress/
 
 # Copy and set permissions for WordPress installer script
-COPY ./tools/wp_installer.sh wp_installer.sh
-RUN chmod +x wp_installer.sh
+COPY ./tools/wp_installer.sh /usr/local/bin
+RUN chmod +x /usr/local/bin/wp_installer.sh
 
 # Set the entry point for the container
-ENTRYPOINT ["sh", "wp_installer.sh"]
+ENTRYPOINT ["sh", "/usr/local/bin/wp_installer.sh"]
 
 # Expose PHP-FPM port
 EXPOSE 9000
