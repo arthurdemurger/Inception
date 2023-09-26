@@ -1,7 +1,5 @@
 FROM debian:buster
 
-# Installation
-
 # Update the package repository
 RUN apt-get update -y
 # Upgrade installed packages

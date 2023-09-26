@@ -6,17 +6,17 @@
 #    By: ademurge <ademurge@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/04/06 10:40:49 by ademurge          #+#    #+#              #
-#    Updated: 2023/09/22 15:01:38 by ademurge         ###   ########.fr        #
+#    Updated: 2023/09/26 15:10:50 by ademurge         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 all:
 	mkdir -p /home/ademurge/data/wordpress/
 	mkdir -p /home/ademurge/data/mariadb/
-	docker compose -f ./src/docker-compose.yml up -d --build
+	sudo docker compose -f ./srcs/docker-compose.yml up -d --build
 
 down:
-	docker compose -f ./src/docker-compose.yml down
+	docker compose -f ./srcs/docker-compose.yml down
 
 clean:
 	docker stop $$(docker ps -qa);\
@@ -27,7 +27,7 @@ clean:
 	docker system prune --volumes -fa;
 
 deep: clean
-	sudo rm -rf ~/data
+	sudo rm -rf /home/ademurge/data/*
 
 re: clean all
 

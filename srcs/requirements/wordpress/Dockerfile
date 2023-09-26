@@ -1,4 +1,3 @@
-# Using Debian Buster as base image
 FROM debian:buster
 
 # Update and install necessary utilities
