@@ -7,8 +7,6 @@ RUN apt-get update && \
 #Crée le dossier requis pour faire tourner mysqld
 RUN mkdir -p /var/run/mysqld
 
-#RUN mkdir -p '/var/run/mysqld/mysqld.sock'
-
 #Copie le script dans les dossier du container
 COPY tools/install_mariadb.sh install_mariadb.sh
 

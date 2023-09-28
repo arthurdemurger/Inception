@@ -18,7 +18,6 @@ RUN openssl req -x509 -nodes \
 	-keyout /etc/nginx/ssl/inception.key \
 	-subj "/C=BE/ST=Brussels/L=Brussels/O=42network/OU=19campus/CN=ademurge.42.fr/UID=ademurge"
 
-
 # Nginx configuration
 # Create directory for Nginx runtime files
 RUN mkdir -p /var/run/nginx

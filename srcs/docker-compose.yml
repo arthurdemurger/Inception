@@ -2,6 +2,7 @@ version: '3'
 services:
   nginx:
     container_name: nginx
+    image: nginx
     build:
       context: ./requirements/nginx  # Specify the build context for the Nginx service
       dockerfile: Dockerfile  # Specify the Dockerfile to use for building the Nginx service
@@ -18,6 +19,7 @@ services:
 
   mariadb:
     container_name: mariadb
+    image: mariadb
     build:
       context: requirements/mariadb  # Specify the build context for the MariaDB service
       dockerfile: Dockerfile  # Specify the Dockerfile to use for building the MariaDB service
@@ -32,6 +34,7 @@ services:
 
   wordpress:
     container_name: wordpress
+    image: wordpress
     build:
       context: requirements/wordpress  # Specify the build context for the WordPress service
     env_file: .env  # Load environment variables from the .env file
